@@ -1,0 +1,72 @@
+def partition(disk, iteration):
+        l = 0
+        r = len(disk) - 1
+
+        while l < r:
+            if disk[l] != ".":
+                l += 1
+            elif disk[r] == ".":
+                r -= 1
+            else:
+                l_count = 1
+                r_count = 1
+
+                i = l
+                while i < len(disk) - 1 and disk[i] == disk[i + 1]:
+                    l_count += 1
+                    i += 1
+
+                j = r
+                while i > 0 and disk[j] == disk[j - 1]:
+                    r_count += 1
+                    j -= 1
+                
+                print(l_count, r_count)
+                if l_count >= r_count:
+                    while l < r and r_count > 0:
+                        temp = disk[r]
+                        disk[r] = disk[l]
+                        disk[l] = temp
+                        r -= 1
+                        l += 1
+                        r_count -= 1
+
+                else:
+                    r = j - 1
+                    if iteration == 0:
+                        l = i + 1
+
+#Use two pointers
+#If empty block is smaller than file block, then the left pointer goes to next empty block
+#If empty block is larger or equal to the file block, right pointer goes to the next rightmost file block
+def part2():
+    with open("day9.in") as file:
+        for line in file:
+            disk = []
+            id = 0
+        
+            for i in range(0, len(line) - 1, 2):
+                for j in range(int(line[i])):
+                    disk.append(str(i//2))
+                
+                for j in range(int(line[i + 1])):
+                    disk.append(".")
+            
+            if len(line) % 2 != 0:
+                for i in range(int(line[-1])):
+                    disk.append(str(len(line)//2))
+
+            for i in range(5):
+                partition(disk, i)
+                print(''.join(disk))
+                print()
+
+            print(''.join(disk))
+            res = 0
+            for i in range(len(disk)):
+                if disk[i] == ".":
+                    break
+                res += i * int(disk[i])
+            print(res)
+
+part2()

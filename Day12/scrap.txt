@@ -1,0 +1,40 @@
+FFVVVVVVVVVVVVVVVVVVVFFFFFFF
+FFFVVVVVVVVVVVVVVVVFFFFFFFFF
+FFFVVVVVVFVVVVVVVVVFFFFFFFFF
+FFFVVVVVVFFFVVVVFFFFFFFFFFFF
+FFFVVVVVVFFFVVVVFFFFFFFFFFFF
+FFVVVVVVVFFFVVVVFFFFFFFFFFFF
+FFFVVVVVVVVVVVVFFFFFFFFFFFFF
+FFFFFFFVVVVVVVVFFFFFFFFFFFFF
+FFFFFVVVVVVVVVVVFFVVFFFFFFFF
+FFFFFFVFFVFFVVVVVVVVFFFFFFFF
+FFFFFFFFFFFFFFVVVVVVFFFFFFFF
+FFFFFFFFFFFFFFVFFFFFFFFFFFFF
+
+def dfs(point, perimeter, visited):
+    y, x, dir = point
+    visited.add(point)
+
+    neighbors = [(0, 0), (-1, 0), (0, -1), (1, 0), (0, 1)]
+    turns = 0
+    no_turning = True
+
+    for n in neighbors:
+        n_y, n_x = y + n[0], x + n[1]
+
+        if (n_y, n_x, dir) not in perimeter or (n_y, n_x, dir) in visited:
+            continue 
+
+        no_turning = False
+        turns += dfs((n_y, n_x, dir), perimeter, visited)
+    
+    if no_turning:
+        return turns
+    
+    
+    
+
+
+        
+        
+
